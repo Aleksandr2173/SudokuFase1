@@ -23,6 +23,6 @@
     "eslint-plugin-import": "^2.25.4"
   },
   "dependencies": {
-    "chalk": "^5.2.0"
+    "chalk": "^4.1.0"
   }
 }

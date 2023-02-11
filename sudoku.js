@@ -1,3 +1,4 @@
+const chalk = require("chalk");
 /**
  * Принимает игровое поле в формате строки — как в файле sudoku-puzzles.txt.
  * Возвращает игровое поле после попытки его решить.
@@ -19,7 +20,7 @@
 // ];
 function solve(inputStr) {
   function fromStrToArr(inputStr) {
-    const arr = inputStr.split('');
+    const arr = inputStr.split("");
     const resArrBig = [];
     for (let i = 0; i < arr.length; i += 9) {
       resArrBig.push(arr.slice(i, i + 9)); // создние малого массив
@@ -34,7 +35,7 @@ function solve(inputStr) {
     //// поиски координат пустой клетки
     for (let row = 0; row < size; row++) {
       for (let colum = 0; colum < size; colum++) {
-        if (board[row][colum] === '-') {
+        if (board[row][colum] === "-") {
           return [row, colum];
         }
       }
@@ -86,7 +87,7 @@ function solve(inputStr) {
         if (solveMy()) {
           return true;
         }
-        board[x][y] = '-';
+        board[x][y] = "-";
       }
     }
     return false;
@@ -124,7 +125,7 @@ function solve(inputStr) {
 function isSolved(board) {
   const str = board.join();
   for (let i = 0; i < str.length; i++) {
-    if (str[i] === '-') {
+    if (str[i] === "-") {
       return false;
     }
   }
