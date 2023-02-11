@@ -34,7 +34,7 @@ function solve(inputStr) {
     //// поиски координат пустой клетки
     for (let row = 0; row < size; row++) {
       for (let colum = 0; colum < size; colum++) {
-        if (board[row][colum] === '.') {
+        if (board[row][colum] === '-') {
           return [row, colum];
         }
       }
