@@ -8,4 +8,3 @@ const readAndSolve = require('./readAndSolve');
 // Прочесть файл puzzles.txt в кодировке 'utf-8' и передать его содержимое в функцию readAndSolve.
 fs.readFile('./puzzles.txt', 'utf-8', readAndSolve);
 
-const As = 'ghbdtn';
