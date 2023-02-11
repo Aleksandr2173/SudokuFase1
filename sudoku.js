@@ -1,24 +1,48 @@
+const fs = require("fs");
+
+const stroka = fs.readFileSync(`${__dirname}/stroka1.txt`, "utf-8");
+
+const strokaIzm = stroka.split("");
 /**
  * Принимает игровое поле в формате строки — как в файле sudoku-puzzles.txt.
  * Возвращает игровое поле после попытки его решить.
  * Договорись со своей командой, в каком формате возвращать этот результат.
  */
 // const chalk= require('chalk');
-const input = [
-  ['5', '3', '3', '4'],
-  ['6', '5', '.', '1'],
-  ['.', '9', '8', '.'],
-  ['8', '.', '.', '.'],
-];
+// const input = [
+//   ["5", "3", "3", "4"],
+//   ["6", "5", ".", "1"],
+//   [".", "9", "8", "."],
+//   ["8", ".", ".", "."],
+// ];
 
-function solveSudoku(board) {
-  const size = 4;
-  const boxSize = 2;
+// const zal = require("./maksim");
+// console.table(zal);
+function zal(arr) {
+  let qwe = [];
+  for (let i = 0; i < arr.length; i += 9) {
+    // let qwe1 = [];
+    qwe.push(arr.slice(i, i + 9)); // создние млого массива
+    // qwe.push(qwe1); // создание большого маассива с вложенными массивами
+  }
+  return qwe;
+}
+// console.log(zal(strokaIzm));
+
+const pop = zal(strokaIzm);
+console.log(pop);
+// const b = zal(
+//   "1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--"
+// );
+
+function solve(board) {
+  const size = 9;
+  const boxSize = 3;
   function findEmpty(board) {
     //// поиски координат пустой клетки
     for (let row = 0; row < size; row++) {
       for (let colum = 0; colum < size; colum++) {
-        if (board[row][colum] === '.') {
+        if (board[row][colum] === ".") {
           return [row, colum];
         }
       }
@@ -70,7 +94,7 @@ function solveSudoku(board) {
         if (solve()) {
           return true;
         }
-        board[x], ([y] = '-');
+        board[x], ([y] = "-");
       }
     }
     return false;
@@ -79,8 +103,7 @@ function solveSudoku(board) {
   return board;
 }
 
-console.table(input);
-console.log(solveSudoku(input));
+// console.table(solve(input));
 
 /**
  * Принимает игровое поле в том формате, в котором его вернули из функции solve.

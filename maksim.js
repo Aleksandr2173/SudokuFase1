@@ -2,7 +2,8 @@ const fs = require("fs");
 
 const stroka = fs.readFileSync(`${__dirname}/stroka1.txt`, "utf-8");
 
-const strokaIzm = stroka.split();
+const strokaIzm = stroka.split("");
+// console.log(strokaIzm);
 // console.log(strokaIzm);
 // const strokaIzm = stroka.split().join(",");
 // const rrr = strokaIzm.split(",");
@@ -26,69 +27,49 @@ const strokaIzm = stroka.split();
 function zal(arr) {
   let qwe = [];
   for (let i = 0; i < arr.length; i += 9) {
-    let qwe1 = [];
-    qwe1.push(arr.slice(i, i + 9)); // создние млого массива
-    qwe.push(qwe1); // создание большого маассива с вложенными массивами
+    // let qwe1 = [];
+    qwe.push(arr.slice(i, i + 9)); // создние млого массива
+    // qwe.push(qwe1); // создание большого маассива с вложенными массивами
   }
   return qwe;
-  // for (let j = 0; j < qwe.length; j += 1) {
-  //   for (let k = 0; k < qwe[j].length; k += 1) {
-  //     console.log(qwe[j][k]);
-  //   }
-  // }
 }
-console.log(zal(stroka));
+// console.log(zal(strokaIzm));
 
-// let input = qwe.map((el) => el.join());
-// console.log(input);
+let result = zal(strokaIzm);
+let result1 = result.map((el, i) => el.join(""));
+console.log(result1.join(""));
 
-// let er = strokaIzm.map((el) => {
-//   let newArr = [];
-//   for (let i = 0; i < el[0].length; i += 1) {
-//     newArr.push(el.split("", 9));
-//   }
-//   return newArr;
-// });
+const input = [
+  ["5", "3", "3", "4"],
+  ["6", "5", "1", 1],
+  ["1", "9", "8", "1"],
+  ["8", "1", "1", "1"],
+];
+let rrr = input.map((el) => {
+  if (el === String) {
+    return true;
+  } else {
+    return false;
+  }
+});
 
-// console.log(er);
+console.log(rrr);
 
-// function rez(arr) {
-//   let newArr = [];
-//   for (let i = 0; i < arr.length; i += 1) {
-//     newArr.push(arr[0].split("", 9));
-//   }
-//   return newArr;
+// let year = prompt('В каком году была опубликована спецификация ECMAScript-2015?', '');
+
+// if (year == 2015) {
+//   alert( 'Да вы знаток!' );
+// } else {
+//   alert( 'А вот и неправильно!' ); // любое значение, кроме 2015
 // }
-// console.log(rez(er));
-// er.forEach((el, index) => {
-//   console.log(er.slice(index, index + 1));
-// });
-// var myString = "Привет, мир. Как дела?";
-// var splits = myString.split(" ", 3);
 
-// console.log(splits);
+console.log(result.every((el) => el.typeof === "string"));
+console.log(input.every((el) => el === Number));
+// console.log(result.map((el) => el.join(",")));
+// let qqq = result.map((el) => el.join(','));
+// console.log(qqq);
+// console.log(result1.join().replace(",", ""));
+// console.log(result1);
+// console.log(result.map((el) => el.join()));
 
-// var names = "Гарри Трамп ;Фрэд Барни; Хелен Ригби ; Билл Абель ;Крис Ханд ";
-
-// console.log(names);
-
-// var re = /\s*;\s*/;
-// var nameList = names.split(re);
-
-// console.log(nameList);
-
-let numbersArr = [1, 2, 3, 4, 5, 6, 7, 8];
-
-// numbersArr.forEach((value, index) => {
-//   console.log(numbersArr.slice(index, index + 2));
-// });
-
-// function stroka1(arr, chunkSize) {
-//   let newArr = [];
-//   for (let i = 0; i < arr.length; i += chunkSize) {
-//     const chunk = arr.slice(i, i + chunkSize);
-//     newArr.push(chunk);
-//   }
-//   return newArr;
-// }
-// console.log(stroka1((er, 9)));
+module.exports = { zal };
