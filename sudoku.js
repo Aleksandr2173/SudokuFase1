@@ -4,21 +4,37 @@
  * Договорись со своей командой, в каком формате возвращать этот результат.
  */
 // const chalk= require('chalk');
-const input = [
-  ['5', '3', '3', '4'],
-  ['6', '5', '.', '1'],
-  ['.', '9', '8', '.'],
-  ['8', '.', '.', '.'],
-];
+// const fromStrToArr = require('./maksim');
 
-function solveSudoku(board) {
-  const size = 4;
-  const boxSize = 2;
+// let input = [
+//   ['5', '3', '-', '-', '7', '-', '-', '-', '-'],
+//   ['6', '-', '-', '1', '9', '5', '-', '-', '-'],
+//   ['-', '9', '8', '-', '-', '-', '-', '6', '-'],
+//   ['8', '-', '-', '-', '6', '-', '-', '-', '3'],
+//   ['4', '-', '-', '8', '-', '3', '-', '-', '1'],
+//   ['7', '-', '-', '-', '2', '-', '-', '-', '6'],
+//   ['-', '6', '-', '-', '-', '-', '2', '8', '-'],
+//   ['-', '-', '-', '4', '1', '9', '-', '-', '5'],
+//   ['-', '-', '-', '-', '8', '-', '-', '7', '9'],
+// ];
+function solve(inputStr) {
+  function fromStrToArr(inputStr) {
+    const arr = inputStr.split('');
+    const resArrBig = [];
+    for (let i = 0; i < arr.length; i += 9) {
+      resArrBig.push(arr.slice(i, i + 9)); // создние малого массив
+    }
+    return resArrBig;
+  }
+
+  const board = fromStrToArr(inputStr);
+  const size = 9;
+  const boxSize = 3;
   function findEmpty(board) {
     //// поиски координат пустой клетки
     for (let row = 0; row < size; row++) {
       for (let colum = 0; colum < size; colum++) {
-        if (board[row][colum] === '.') {
+        if (board[row][colum] === '-') {
           return [row, colum];
         }
       }
@@ -56,7 +72,7 @@ function solveSudoku(board) {
     return true;
   };
 
-  const solve = () => {
+  const solveMy = () => {
     const currPos = findEmpty(board);
     if (currPos === null) {
       return true;
@@ -67,33 +83,62 @@ function solveSudoku(board) {
       if (isValidate) {
         const [x, y] = currPos;
         board[x][y] = currNum;
-        if (solve()) {
+        if (solveMy()) {
           return true;
         }
-        board[x], ([y] = '-');
+        board[x][y] = '-';
       }
     }
     return false;
   };
-  solve();
+  solveMy();
   return board;
 }
 
-console.table(input);
-console.log(solveSudoku(input));
+// const result = solve(
+//   '1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--'
+// );
 
-/**
- * Принимает игровое поле в том формате, в котором его вернули из функции solve.
- * Возвращает булевое значение — решено это игровое поле или нет.
- */
-function isSolved(board) {}
+// function pruvd(result) {
+//   let resStr = '';
+//   for (let i = 0; i < result.length; i++) {
+//     if (result[i] !== ',') {
+//       resStr = resStr + result[i];
+//     }
+//   }
+//   return resStr.replaceAll(',', '');
+// }
 
-/**
- * Принимает игровое поле в том формате, в котором его вернули из функции solve.
- * Возвращает строку с игровым полем для последующего вывода в консоль.
- * Подумай, как симпатичнее сформировать эту строку.
- */
-function prettyBoard(board) {}
+// console.log(result.join().replaceAll(',', ''));
+
+// console.table(
+//   solve(
+//     '1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--'
+//   )
+// );
+
+// /**
+//  * Принимает игровое поле в том формате, в котором его вернули из функции solve.
+//  * Возвращает булевое значение — решено это игровое поле или нет.
+//  */
+function isSolved(board) {
+  const str = board.join();
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === '-') {
+      return false;
+    }
+  }
+  return true;
+}
+
+// /**
+//  * Принимает игровое поле в том формате, в котором его вернули из функции solve.
+//  * Возвращает строку с игровым полем для последующего вывода в консоль.
+//  * Подумай, как симпатичнее сформировать эту строку.
+//  */
+function prettyBoard(board) {
+  console.table(board);
+}
 
 // Экспортировать функции для использования в другом файле (например, readAndSolve.js).
 module.exports = {
@@ -101,11 +146,3 @@ module.exports = {
   isSolved,
   prettyBoard,
 };
-
-// const str =
-//   '6-873----2-----46-----6482--8---57-19--618--4-31----8-86-2---39-5----1--1--4562--';
-
-// function arrInStr(str) {
-//   const arrInStr = str.split('');
-// }
-// console.log(arrInStr(str));
