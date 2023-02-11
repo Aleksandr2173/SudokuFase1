@@ -3,6 +3,7 @@
  * Возвращает игровое поле после попытки его решить.
  * Договорись со своей командой, в каком формате возвращать этот результат.
  */
+// const chalk= require('chalk');
 const input = [
   ['5', '3', '3', '4'],
   ['6', '5', '.', '1'],
@@ -10,16 +11,11 @@ const input = [
   ['8', '.', '.', '.'],
 ];
 
-// const input = [
-//   ['5', '3', '3', '4'],
-//   ['6', '5', '5', '1'],
-//   ['6', '9', '8', '6'],
-//   ['8', '7', '8', '9'],
-// ];
-function solve(board) {
+function solveSudoku(board) {
   const size = 4;
   const boxSize = 2;
-  function findEmpty(boar) {
+  function findEmpty(board) {
+    //// поиски координат пустой клетки
     for (let row = 0; row < size; row++) {
       for (let colum = 0; colum < size; colum++) {
         if (board[row][colum] === '.') {
@@ -29,13 +25,62 @@ function solve(board) {
     }
     return null;
   }
+  ///// проверка на валидность нашего клетки
+  const validate = (num, pos, board) => {
+    const [row, colum] = pos;
 
-  return findEmpty(input);
-  const currPos = findEmpty(board);
-  if (currPos === null) return true;
+    ///////проверяем колонку
+    for (let i = 0; i < size; i++) {
+      if (board[i][colum] === num && i !== row) {
+        return false;
+      }
+    }
+    ////////проверяем строку
+    for (let i = 0; i < size; i++) {
+      if (board[row][i] === num && i !== colum) {
+        return false;
+      }
+    }
+
+    /////// находим и проверяем квадрат
+    const boxRow = Math.floor(row / boxSize) * boxSize;
+    const boxCol = Math.floor(colum / boxSize) * boxSize;
+
+    for (let i = boxRow; i < boxRow + boxSize; i++) {
+      for (let j = boxCol; j < boxCol + boxSize; j++) {
+        if (board[i][j] === num && i !== row && j !== colum) {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
+  const solve = () => {
+    const currPos = findEmpty(board);
+    if (currPos === null) {
+      return true;
+    }
+    for (let i = 1; i < size + 1; i++) {
+      const currNum = i.toString();
+      const isValidate = validate(currNum, currPos, board);
+      if (isValidate) {
+        const [x, y] = currPos;
+        board[x][y] = currNum;
+        if (solve()) {
+          return true;
+        }
+        board[x], ([y] = '-');
+      }
+    }
+    return false;
+  };
+  solve();
+  return board;
 }
 
-console.log(solve(input));
+console.table(input);
+console.log(solveSudoku(input));
 
 /**
  * Принимает игровое поле в том формате, в котором его вернули из функции solve.
